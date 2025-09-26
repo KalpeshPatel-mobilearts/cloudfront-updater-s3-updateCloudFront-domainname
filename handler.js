@@ -142,6 +142,7 @@ const newDistConfig = {
   ]
 };
 
+// first commit
 // Function to find CloudFront distribution by domain name via Route53
 async function findDistributionByDomain(domainName) {
     try {
