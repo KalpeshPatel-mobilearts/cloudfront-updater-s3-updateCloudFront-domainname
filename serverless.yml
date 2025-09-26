@@ -1,0 +1,31 @@
+service: cloudfront-updater-domainname
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-central-1
+  stage: dev
+  tags:
+    Creator: Infra-Team
+    resourcename: cloudfront-updater-domainname-dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - cloudfront:GetDistribution
+        - cloudfront:UpdateDistribution
+        - cloudfront:CreateInvalidation
+        - cloudfront:ListDistributions
+        - route53:ListHostedZones
+        - route53:ListResourceRecordSets
+      Resource: "*"
+
+functions:
+  updateCloudFrontByDomain:
+    handler: handler.updateDistributionByDomain
+    tags:
+      Creator: Infra-Team
+      resourcename: cloudfront-updater-domainname-updateCloudFrontByDomain-dev
+    events:
+      - http:
+          path: update-cloudfront-domain
+          method: post
